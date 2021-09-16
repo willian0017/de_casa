@@ -33,9 +33,21 @@ let options = {
     types: ['(cities)']
 }
 
-// Inputs de autocompletação de lugares do Google
+// Inputs de autocompletamento de lugares do Google
 let input1 = document.getElementById("from");
-let autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+let autocomplete1 = latLng;
 
 let input2 = document.getElementById("to");
 let autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+
+
+//----------------------------------------------------------------------------//
+// function myPosition(positions) {
+//     const successCallback = (position) => {
+//         console.log(position);
+//     }
+//     const errorCallback = (error) => {
+//         console.error(error);
+//     }
+//     navigator.geolocation.watchPosition(successCallback, errorCallback)
+// }

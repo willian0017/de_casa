@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>QUAC | Mapa de distância</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link href="styles2.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <h4>Onde você está</h4>
+        <p>Clique no botão para sabermos seu endereço</p>
+        <div id="map">
+        </div>
+        <p id="current_position"></p>
+        <button id="showMe" class="btn center-align">
+            Use minha localização
+        </button>
+        <form id="billingAddress">
+            <div id="locationList"></div>
+            <br>
+        </form>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1NvDncK1bxyaAVTEt69j-C9csOm1ETOg"></script>
+    <script src="app2.js"></script>
+</body>
+
+</html>
