@@ -1,22 +1,21 @@
-let myLatLng = { lat: 38.3460, lng: -0.4907 };
+let latLng = { lat: -26.819839, lng: -49.272735 };
 let mapOptions = {
-    center: myLatLng,
-    zoom: 7,
+    center: latLng,
+    zoom: 10,
     mapTypeId: google.maps.MapTypeId.ROADMAP
 };
 let map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 let directionsService = new google.maps.DirectionsService();
 let directionsDisplay = new google.maps.DirectionsRenderer();
 directionsDisplay.setMap(map);
-function calcRoute() {
 
+function calcRoute() {
     let request = {
         origin: document.getElementById("from").value,
         destination: document.getElementById("to").value,
         travelMode: google.maps.TravelMode.DRIVING, 
         unitSystem: google.maps.UnitSystem.METRICAL
     }
-
     directionsService.route(request, function (result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             const output = document.querySelector('#output');
@@ -24,7 +23,7 @@ function calcRoute() {
             directionsDisplay.setDirections(result);
         } else {
             directionsDisplay.setDirections({ routes: [] });
-            map.setCenter(myLatLng);
+            map.setCenter(latLng);
             output.innerHTML = "<div class='alert-danger'><i class='fas fa-exclamation-triangle'></i> Não conseguimos calcular a distância da rota.</div>";
         }
     });
@@ -34,6 +33,7 @@ let options = {
     types: ['(cities)']
 }
 
+// Inputs de autocompletação de lugares do Google
 let input1 = document.getElementById("from");
 let autocomplete1 = new google.maps.places.Autocomplete(input1, options);
 
