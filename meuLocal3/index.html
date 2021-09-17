@@ -6,20 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<div class="form-group">
+    <label for="to" class="col-xs-2 control-label"><i class="fas fa-map-marker-alt"></i></label>
+    <div class="col-xs-4">
+        <input type="text" id="to" placeholder="Destination" class="form-control">
+    </div>
+</div>
+<div class="container-fluid">
+    <div id="googleMap">
+    </div>
+    <div id="output">
+    </div>
+</div>
 
 <body>
     <script>
         const successCallback = (position) => {
             console.log(position);
+            const latitude = position.coords.latitude
+            const longitude = position.coords.longitude
+            // console.log(latitude + ' ' + longitude);
+            localStorage.setItem(latitude, longitude)
         }
         const errorCallback = (error) => {
             console.error(error);
         }
-        navigator.geolocation.watchPosition(successCallback, errorCallback)
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
+
+        localStorage.getItem('latitude', 'longitude')
+        let latLng = { lat: 'latitude', lng: 'longitude' };
+        let mapOptions = {
+            center: latLng,
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        let map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
+        let directionsService = new google.maps.DirectionsService();
+        let directionsDisplay = new google.maps.DirectionsRenderer();
+        directionsDisplay.setMap(map);
+
     </script>
-    <!-- <script>
-        let myLatLgt = {lat:{}}
-    </script> -->
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1NvDncK1bxyaAVTEt69j-C9csOm1ETOg&libraries=places"></script>
 </body>
 
 </html>
