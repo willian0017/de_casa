@@ -15,7 +15,7 @@ function calcRoute() {
         destination: document.getElementById("to").value,
         travelMode: google.maps.TravelMode.DRIVING, 
         unitSystem: google.maps.UnitSystem.METRICAL
-    }
+    } 
     directionsService.route(request, function (result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             const output = document.querySelector('#output');

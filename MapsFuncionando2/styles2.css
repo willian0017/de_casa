@@ -1,0 +1,64 @@
+body {
+    color:  rgb(16, 151, 138);
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+  }
+  
+  .jumbotron {
+    background-color: transparent;
+    margin: 0;
+    padding: 10px;
+  }
+  
+  .jumbotron h1 {
+    letter-spacing: 2.5px;
+    font-size: 3.5em;
+  }
+  
+  .jumbotron h1,
+  .jumbotron p {
+    text-align: center;
+  }
+  
+  #googleMap {
+    width: 40%;
+    height: 400px;
+    margin: 10px auto;
+  }
+  
+  #output {
+    text-align: center;
+    font-size: 2em;
+    margin: 20px auto;
+    border-radius: 50px;
+  }
+  
+  #mode {
+    color: black;
+  }
+
+  .form-control{
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 50px;
+    border-color: teal;
+  }
+  .form-control:focus {
+    outline: none;
+  }
+
+
+  button {
+    background-color: rgb(16, 151, 138);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 50px;
+  }
+  

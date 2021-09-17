@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1NvDncK1bxyaAVTEt69j-C9csOm1ETOg&libraries=places"></script>
+    <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 
 <div class="form-group">
+    <h1>Escolha o estabelecimento</h1>
     <label for="to" class="col-xs-2 control-label"><i class="fas fa-map-marker-alt"></i></label>
     <div class="col-xs-4">
         <input type="text" id="to" placeholder="Destination" class="form-control">
     </div>
+</div>
+<div class="botao">
+    <button onclick="calcRoute();">Calcular distância</button>
 </div>
 <div class="container-fluid">
     <div id="googleMap">
@@ -19,9 +24,7 @@
     <div id="output">
     </div>
 </div>
-<div class="col-xs-offset-2 col-xs-10">
-    <button class="btn btn-info btn-lg " onclick="calcRoute();"><i class="fas fa-map-signs"></i></button>
-</div>
+
 
 <body>
     <script>
@@ -30,23 +33,23 @@
             const latitude = position.coords.latitude
             const longitude = position.coords.longitude
             // console.log(latitude + ' ' + longitude);
-            localStorage.setItem(latitude, longitude)
+            localStorage.setItem("latitude", latitude);
+            localStorage.setItem("longitude", longitude);
         }
         const errorCallback = (error) => {
             console.error(error);
         }
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
 
-
-
-
         let latLng = { 
-            lat: localStorage.getItem("latitude"),
-            lng: localStorage.getItem("longitude")
+            lat: +localStorage.getItem("latitude"),
+            lng: +localStorage.getItem("longitude")
          };
+
+        console.log(latLng)
         let mapOptions = {
             center: latLng,
-            zoom: 10,
+            zoom: 4,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         let map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
@@ -56,7 +59,7 @@
 
         function calcRoute() {
             let request = {
-                origin: document.getElementById("from").value,
+                origin: latLng,
                 destination: document.getElementById("to").value,
                 travelMode: google.maps.TravelMode.DRIVING,
                 unitSystem: google.maps.UnitSystem.METRICAL
@@ -64,7 +67,7 @@
             directionsService.route(request, function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     const output = document.querySelector('#output');
-                    output.innerHTML = "<div class='alert-info'>De: " + document.getElementById("from").value + ".<br />Para: " + document.getElementById("to").value + ".<br /> Distância dirigindo <i class='fas fa-road'></i> : " + result.routes[0].legs[0].distance.text + ".<br />Tempo estimado <i class='fas fa-hourglass-start'></i> : " + result.routes[0].legs[0].duration.text + ".</div>";
+                    output.innerHTML = "Estabelecimento: " + document.getElementById("to").value + ".<br /> Distância dirigindo <i class='fas fa-road'></i> : " + result.routes[0].legs[0].distance.text + ".<br />Tempo estimado <i class='fas fa-hourglass-start'></i> : " + result.routes[0].legs[0].duration.text + ".</div>";
                     directionsDisplay.setDirections(result);
                 } else {
                     directionsDisplay.setDirections({ routes: [] });
@@ -80,6 +83,7 @@
 
         let input = document.getElementById("to");
         let autocomplete = new google.maps.places.Autocomplete(input, options);
+        localStorage.clear()
     </script>
 </body>
 
