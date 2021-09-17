@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1NvDncK1bxyaAVTEt69j-C9csOm1ETOg&libraries=places"></script>
     <title>Document</title>
 </head>
+
 <div class="form-group">
     <label for="to" class="col-xs-2 control-label"><i class="fas fa-map-marker-alt"></i></label>
     <div class="col-xs-4">
@@ -17,6 +18,9 @@
     </div>
     <div id="output">
     </div>
+</div>
+<div class="col-xs-offset-2 col-xs-10">
+    <button class="btn btn-info btn-lg " onclick="calcRoute();"><i class="fas fa-map-signs"></i></button>
 </div>
 
 <body>
@@ -33,8 +37,13 @@
         }
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
 
-        localStorage.getItem('latitude', 'longitude')
-        let latLng = { lat: 'latitude', lng: 'longitude' };
+
+
+
+        let latLng = { 
+            lat: localStorage.getItem("latitude"),
+            lng: localStorage.getItem("longitude")
+         };
         let mapOptions = {
             center: latLng,
             zoom: 10,
@@ -45,10 +54,33 @@
         let directionsDisplay = new google.maps.DirectionsRenderer();
         directionsDisplay.setMap(map);
 
-    </script>
+        function calcRoute() {
+            let request = {
+                origin: document.getElementById("from").value,
+                destination: document.getElementById("to").value,
+                travelMode: google.maps.TravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.METRICAL
+            }
+            directionsService.route(request, function (result, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    const output = document.querySelector('#output');
+                    output.innerHTML = "<div class='alert-info'>De: " + document.getElementById("from").value + ".<br />Para: " + document.getElementById("to").value + ".<br /> Distância dirigindo <i class='fas fa-road'></i> : " + result.routes[0].legs[0].distance.text + ".<br />Tempo estimado <i class='fas fa-hourglass-start'></i> : " + result.routes[0].legs[0].duration.text + ".</div>";
+                    directionsDisplay.setDirections(result);
+                } else {
+                    directionsDisplay.setDirections({ routes: [] });
+                    map.setCenter(latLng);
+                    output.innerHTML = "<div class='alert-danger'><i class='fas fa-exclamation-triangle'></i> Não conseguimos calcular a distância da rota.</div>";
+                }
+            });
+        }
 
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1NvDncK1bxyaAVTEt69j-C9csOm1ETOg&libraries=places"></script>
+        let options = {
+            types: ['(cities)']
+        }
+
+        let input = document.getElementById("to");
+        let autocomplete = new google.maps.places.Autocomplete(input, options);
+    </script>
 </body>
 
 </html>
